@@ -1,0 +1,36 @@
+#!/bin/zsh
+# 
+# 
+# SET PROPERTIES
+################
+FONT_NAME="$1"
+FONT_PATH="/Library/Fonts"
+
+event_loop() {
+
+    echo "\x1b[2J" ; echo "\x1b[H"
+    # FULLNAME=$(fc-scan "$FONT_PATH"/"$1"{.ttf,.otf} | grep fullname:)
+    fc-scan "$FONT_PATH"/"$FONT_NAME"{.ttf,.otf} | grep fullname:
+    fc-scan "$FONT_PATH"/"$FONT_NAME"{.ttf,.otf} | grep postscriptname
+    fc-scan "$FONT_PATH"/"$FONT_NAME"{.ttf,.otf} | grep file
+    echo "\n"
+}
+
+if [ -n "$1" ]; then
+        event_loop
+    fi
+
+while true; do
+    
+    echo "Type q to quit..."
+    read -r user_input
+    
+    if [ "$user_input" = "q" ]; then
+        break
+    else
+        FONT_NAME="$user_input"
+        event_loop
+    fi
+done
+
+exit 

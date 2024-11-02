@@ -1,0 +1,22 @@
+#!/usr/bin/osascript
+
+set js_name to "document.querySelectorAll('#viewer-zoomable-image img')[0].alt"
+set js_url to "document.querySelectorAll('#viewer-zoomable-image img')[0].src"
+
+set py_script to "/Users/diegoibarra/Developer/1_myProjects/MiniTasks/AmbossImageSaver/AmbossImageSaver_python "
+
+tell application "Safari"
+	set all_tabs to tabs of window 1
+	
+	repeat with a_tab in all_tabs
+		set tab_name to name of a_tab
+		if tab_name contains "AMBOSS" then
+			set file_name to quoted form of (do JavaScript js_name in a_tab)
+			set file_url to do JavaScript js_url in a_tab
+			set whole_script to py_script & file_name & " " & file_url
+			do shell script whole_script user name "diegoibarra" password "hahahey" with administrator privileges
+		end if
+	end repeat
+end tell
+
+

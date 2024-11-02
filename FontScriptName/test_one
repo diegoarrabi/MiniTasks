@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Enable debugging and set the trap to display each command
+set -o xtrace
+trap 'echo "Executing: $BASH_COMMAND"' DEBUG
+
+# Your script logic here
+echo "This is a test script."
+ls -l
+echo "Script execution complete."
+
+# Disable debugging
+trap - DEBUG
+set +o xtrace

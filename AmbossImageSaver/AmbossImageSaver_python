@@ -1,0 +1,24 @@
+#!/Users/diegoibarra/.config/pyenv/versions/3.12.1/envs/MiniTasks/bin/python
+
+import sys
+from os import path
+import requests
+
+def downloadImage(url, save_as):
+    save_path = path.join(IMG_DIR, save_as)
+    response = requests.get(url)
+    with open(save_path, 'wb') as file:
+        file.write(response.content)
+
+IMG_DIR="/Users/diegoibarra/Documents/School/OSU/Education/Part 2/1. Rings/UPSMN/UPSMN Review/Internal Med/MyStudies"
+# IMG_DIR="/Users/diegoibarra/Downloads"
+
+var = sys.argv[1:]
+file_ext = var[1].split('.')
+file_ext = file_ext[-1]
+file_name = f'{var[0]}.{file_ext}'
+file_url = var[1]
+
+downloadImage(file_url, file_name)
+
+

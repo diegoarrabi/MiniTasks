@@ -1,0 +1,6 @@
+#!/bin/bash
+IFS=':' read -ra anArray <<< "$PATH"
+for item in "${anArray[@]}"; do
+  echo $item
+done
+

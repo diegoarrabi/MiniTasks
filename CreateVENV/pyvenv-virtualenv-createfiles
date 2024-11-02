@@ -1,0 +1,34 @@
+#!/bin/bash
+
+VIRTUALENV_NAME="$1"
+CURR_DIR_PATH="$2"
+cd "$CURR_DIR_PATH"
+
+
+IFS='/' read -ra arrayVar <<< "$VIRTUALENV_NAME"
+NEWPATH="${arrayVar[0]}/${arrayVar[1]}"
+VENV_NAME="${arrayVar[2]}"
+IFS=$OIFS
+
+if [ -f .python-version ]
+then
+    rm -f ".python-version"
+    rm -f "pyrightconfig.json"    
+fi
+
+touch ".python-version" && echo "${VIRTUALENV_NAME}" >> ".python-version"
+touch "pyrightconfig.json"
+cat <<EOF >>pyrightconfig.json
+{
+  "venvPath": "/Users/diegoibarra/.config/pyenv/versions/${NEWPATH}/",
+  "venv": "${VENV_NAME}",
+  "typeCheckingMode": "off"
+  "
+}
+EOF
+
+echo "/////////////////////////////////////////////////////////"
+echo "//  CURR_DIR_PATH:    ${CURR_DIR_PATH}"
+echo "//  VENV_NAME:        ${VENV_NAME}"
+
+

@@ -1,0 +1,24 @@
+# #!/Users/diegoibarra/.config/pyenv/versions/3.12.1/bin/python
+
+from os import path, listdir
+from shutil import move
+
+
+USER_DIRECTORY = "/Users/diegoibarra/Applications"
+GLOBAL_DIRECTORY = "/Applications"
+
+# USER_DIRECTORY = "/Users/diegoibarra/Developer/z_worker/_1KeepEmpty/SOURCE"
+# GLOBAL_DIRECTORY = "/Users/diegoibarra/Developer/z_worker/_1KeepEmpty/DESTINATION"
+
+list_files = [_file for _file in listdir(USER_DIRECTORY) if _file[0] != "."]
+
+for individual_file in list_files:
+    if individual_file.find("Autodesk") != -1:
+        source_path = path.join(USER_DIRECTORY, individual_file)
+        destination_path = path.join(GLOBAL_DIRECTORY, individual_file)
+        move(source_path, destination_path)
+
+files_left = [_file for _file in listdir(USER_DIRECTORY) if _file[0] != "."]
+if len(files_left) == 0:
+    move(USER_DIRECTORY, "/Users/diegoibarra/.Trash")
+

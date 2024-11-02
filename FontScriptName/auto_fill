@@ -1,0 +1,45 @@
+#!/bin/zsh
+# 
+# 
+# SET PROPERTIES
+################
+FONT_NAME="$1"
+FONT_PATH="/Library/Fonts"
+
+#
+#  
+# FUNCTION TO CLEAN UP BACKGROUND PROCESS
+#########################################
+cleanup() {
+    kill $LS_PID
+    exit
+}
+#
+#  
+# RUN `ls` COMMAND IN THE BACKGROUND AND SAVE ITS PID
+#####################################################
+while true; do
+    clear
+    ls "$FONT_PATH"
+    sleep 1
+done &
+LS_PID=$!
+# 
+# 
+# TRAP `EXIT` SIGNAL TO ENSURE CLEANUP
+######################################
+trap cleanup EXIT
+##
+###
+###
+# PROGRAM LIFECYCLE
+echo "FONT_NAME: ${FONT_NAME}"
+###
+###
+##
+# Wait for user input to keep the script running
+echo "Press any key to exit..."
+read -r 
+
+
+# how do make a cli script that displays internal commands 

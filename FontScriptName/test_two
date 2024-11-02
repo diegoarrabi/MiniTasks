@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# SET PROPERTIES
+################
+FONT_PATH="/Library/Fonts"
+
+# FUNCTION TO DISPLAY MENU
+##########################
+display_menu() {
+    clear
+    echo "Select a file from the directory:"
+    ls "$FONT_PATH"
+    echo
+    echo "Enter the name of the file you want to select:"
+}
+
+# FUNCTION TO CLEAN UP BACKGROUND PROCESS
+#########################################
+cleanup() {
+    kill $LS_PID
+    exit
+}
+
+# RUN `ls` COMMAND IN THE BACKGROUND AND SAVE ITS PID
+#####################################################
+while true; do
+    clear
+    ls "$FONT_PATH"
+    sleep 1
+done &
+LS_PID=$!
+
+# TRAP `EXIT` SIGNAL TO ENSURE CLEANUP
+######################################
+trap cleanup EXIT
+
+# PROGRAM LIFECYCLE
+###################
+while true; do
+    display_menu
+    read -r FILE_NAME
+
+    if [ -f "$FONT_PATH/$FILE_NAME" ]; then
+        echo "You selected: $FILE_NAME"
+        break
+    else
+        echo "Invalid selection. Please try again."
+        sleep 2
+    fi
+done
+
+# Wait for user input to keep the script running
+echo "Press any key to exit..."
+read -r
+exit
