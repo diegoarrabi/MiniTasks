@@ -1,0 +1,46 @@
+#!/usr/bin/osascript
+
+on run (script_argv)
+	
+	set argv_value to ""
+	
+	--From ScriptEditor
+	if class of script_argv is equal to script then set script_argv to {}
+	
+	-- From Terminal
+	if script_argv is equal to {} then
+		--NO Variable
+		set popup_msg to "Run was Successful"
+	else
+		--One or More Variables
+		set argv_value to (listToString(script_argv) as string)
+		
+		set popup_msg to "Value: \n\n" & (argv_value)
+	end if
+	
+	set popup_title to "Executable Test"
+	set popup_icon to POSIX file "/Users/diegoibarra/Pictures/2. Icons/0. Icons/sfpro/apple.terminal.png"
+	set button_text to ":)"
+	
+	display dialog popup_msg with title popup_title with icon popup_icon buttons {button_text} default button 1 giving up after 1
+	
+	return script_argv
+	
+	
+end run
+
+on listToString(a_list)
+	if length of a_list is equal to 1 then return a_list
+	set new_list to {}
+	set counter to 1
+	repeat with an_item in a_list
+		if length of a_list is equal to (counter) then
+			set new_item to ("\t" & an_item)
+		else
+			set new_item to ("\t" & an_item & "\n\n")
+		end if
+		copy new_item to end of new_list
+		set counter to (counter + 1)
+	end repeat
+	return new_list
+end listToString

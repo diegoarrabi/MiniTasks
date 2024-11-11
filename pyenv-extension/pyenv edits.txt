@@ -1,0 +1,7 @@
+pyenv-extension 	(MY FILE)
+pyenv-virtualenv 	(called when making a venv)
+
+pyenv-sh-activate 	(sets prompt)
+pyenv-virtualenv-init 	(runs every command/dir change)
+pyenv-virtualenv-prefix	(returnsing that 3.13.0 is not a venv)
+	… i guess its not wrong

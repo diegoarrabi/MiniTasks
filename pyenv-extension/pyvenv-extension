@@ -1,14 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# FOR REFERENCE
+# THIS FILE IS CALLED BY THE FOLLOWING COMMAND
+# /opt/homebrew/Cellar/pyenv-virtualenv/1.2.4/bin/pyenv-virtualenv
+
 
 VIRTUALENV_NAME="$1"
 CURR_DIR_PATH="$2"
 cd "$CURR_DIR_PATH"
 
-
+OLDIFS="$IFS"
 IFS='/' read -ra arrayVar <<< "$VIRTUALENV_NAME"
 NEWPATH="${arrayVar[0]}/${arrayVar[1]}"
 VENV_NAME="${arrayVar[2]}"
-IFS=$OIFS
+IFS="$OLDIFS"
 
 if [ -f .python-version ]
 then
@@ -23,12 +28,15 @@ cat <<EOF >>pyrightconfig.json
   "venvPath": "/Users/diegoibarra/.config/pyenv/versions/${NEWPATH}/",
   "venv": "${VENV_NAME}",
   "typeCheckingMode": "off"
-  "
 }
 EOF
 
-echo "/////////////////////////////////////////////////////////"
-echo "//  CURR_DIR_PATH:    ${CURR_DIR_PATH}"
-echo "//  VENV_NAME:        ${VENV_NAME}"
-
+echo "///////////////////////////////////////////"
+echo "//"
+echo "//  CURR_DIR_PATH: "
+echo "//      ${CURR_DIR_PATH}"
+echo "//"
+echo "//  VENV_NAME: "
+echo "//      ${VENV_NAME}"
+echo "//"
 
