@@ -1,0 +1,98 @@
+#!/usr/bin/env zsh
+
+##############################################################
+#   USAGE
+#       newFile filename
+#       newFile /full/path/to/file
+#       newFile [-option] 
+##############################################################
+
+# FILE =    /Users/diegoibarra/Developer/misc/TESTFILE
+# DIR =     /Users/diegoibarra/Developer/misc/
+# ERROR =   /Users/diegoibarra/Developer/misc/TESTFILE/TESTFILE
+
+
+
+help_message() {
+    cat <<EOF
+    hello
+    my
+    name
+    is
+    diego 
+EOF
+}
+
+send_to_touch() {
+    local touch_argument="$1"
+    local touch_output
+    
+    # CAPTURE STDOUT AND STDERR
+    touch_output="$(touch "${touch_argument}" 2>&1)"
+    
+    if [ $? -ne 0 ]; then
+        # RETURNS ERROR MESSAGE
+        echo "${touch_output}"
+    else
+        echo "0"
+    fi
+}
+
+
+CURRENT_PATH="$(PWD)"
+SHOULD_COPY=1
+
+# set -e
+if [ "$#" -eq 1 ]; then
+# ONLY ONE ARGUMENT PASSED        
+    if [ -e "${1}" ]; then
+    # PATH ALREADY EXISTS (FILE OR DIRECTORY)
+        if [ -d "${1}" ]; then
+            echo "The path "${1}" is already a file"
+            exit 1
+        elif [ -d "${1}" ]; then
+            echo "The path "${1}" is a directory"
+            exit 1
+        else
+            echo "The path "${1}" exists but is not a file or directory"
+            exit 1
+        fi
+    fi
+fi
+
+for _arg in "$@"; do
+    # CONVERT ARGUMENTS TO LOWERCASE
+    lowercase_arg="${_arg:l}"
+    case "$lowercase_arg" in
+    "-code" | "-c" | "-vs" | "-vscode")
+        open_code=1
+    ;;
+    "-finder" | "-f" ) 
+        open_finder=1
+    ;;
+    "-no-paste" | "-np" ) 
+        unset SHOULD_COPY
+    ;;
+    "-h" | "-help" )
+        help_message
+        break
+    ;;
+    * )
+        touch_output="$(send_to_touch "${_arg}")"
+        if [ "${touch_output}" != "0" ]; then
+            # EXITED WITH AN ERROR MESSAGE
+            echo "${touch_output}"
+            exit    
+        fi
+        file_path="${_arg}"
+        break 
+    ;;
+    esac
+done
+
+if [ -f "${file_path}" ]; then
+    # IF FILE EXISTS
+    [ -n "${SHOULD_COPY}" ] && echo "$_arg" | pbcopy
+    [ -n "${open_code}" ] && code --reuse-window "$file_path"
+    [ -n "${open_finder}" ] && open -R "$file_path"
+fi
