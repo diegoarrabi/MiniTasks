@@ -21,78 +21,188 @@ help_message() {
     is
     diego 
 EOF
+    exit
+}
+
+log() {
+    local log_file="/Users/diegoibarra/Developer/1_myProjects/MiniTasks/.general_resources/touchd.log"
+    local line_num="$1"
+    local main_msg="$2"
+    local time_now="[$(date +%_m.%d\ %_H:%_M:%_S)]"
+    local sub_msg
+
+    if [ "${@[$#]}" != "start" ]; then
+        [ "$#" -gt 2 ] && sub_msg="[ ${3} ]"
+        echo "[ ${line_num} ]  [ ${main_msg} ]  ${sub_msg}\n" >>${log_file}
+    else
+        spacer="------------------"
+        echo "\n\n${time_now} ${spacer}  START OF SCRIPT  ${spacer}" >>${log_file}
+        echo "${spacer}${spacer}${spacer}${spacer}" >>${log_file}
+    fi
+
 }
 
 send_to_touch() {
     local touch_argument="$1"
-    local touch_output
     
     # CAPTURE STDOUT AND STDERR
-    touch_output="$(touch "${touch_argument}" 2>&1)"
-    
-    if [ $? -ne 0 ]; then
+    # touch_output="$(touch "${touch_argument}" 2>&1)"
+    touch_error="$(touch ${touch_argument} 2>&1)"
+    touch_exit=$?
+
+    # CHECK SUCCESS OF CALL
+    if [ $touch_exit -ne 0 ]; then
         # RETURNS ERROR MESSAGE
-        echo "${touch_output}"
+        echo "$touch_error"
+        return 1
     else
-        echo "0"
+        # RETURNS PSEUDO SUCCESS EXIT CODE
+        return 0
     fi
 }
 
 
-CURRENT_PATH="$(PWD)"
-SHOULD_COPY=1
+log "start"
+current_path="$(PWD)"
 
-# set -e
-if [ "$#" -eq 1 ]; then
-# ONLY ONE ARGUMENT PASSED        
-    if [ -e "${1}" ]; then
-    # PATH ALREADY EXISTS (FILE OR DIRECTORY)
-        if [ -d "${1}" ]; then
-            echo "The path "${1}" is already a file"
-            exit 1
-        elif [ -d "${1}" ]; then
-            echo "The path "${1}" is a directory"
-            exit 1
-        else
-            echo "The path "${1}" exists but is not a file or directory"
-            exit 1
-        fi
+
+# CHECKS TO SEE IF LAST ARGUMENT ALREADY EXISTS
+if [ -e "${@[$#]}" ]; then
+    # PATH ALREADY EXISTS
+    if [ -f "${@[$#]}" ]; then
+        # PATH IS FILE
+        echo "The path "${1}" is already a file"
+        log "${LINENO}" "${@[$#]}" "Path is already a File"
+        exit 1
+    elif [ -d "${@[$#]}" ]; then
+        # PATH IS DIRECTORY
+        echo "The path ${@[$#]} is already a directory"
+        log "${LINENO}" "${@[$#]}" "Path is already a Directory"
+        exit 1
+    else
+        # PATH EXISTS BUT NOT DIRECTORY OR FILE
+        echo "The path ${@[$#]} exists but is not a file or directory"
+        log "${LINENO}" "${@[$#]}" "Path exists but is not a file or directory"
+        exit 1
     fi
 fi
 
+# IF NO ARGUMENTS PASSED
+[ "$#" -eq 0 ] && set -- "-help"
+    
+
 for _arg in "$@"; do
-    # CONVERT ARGUMENTS TO LOWERCASE
-    lowercase_arg="${_arg:l}"
-    case "$lowercase_arg" in
+    log "${LINENO}" "$_arg" "Argument iteration"
+    case "${_arg:l}" in
     "-code" | "-c" | "-vs" | "-vscode")
         open_code=1
+        log "${LINENO}" "open_code set to 1" 
     ;;
     "-finder" | "-f" ) 
         open_finder=1
+        log "${LINENO}" "open_finder set to 1" 
     ;;
     "-no-paste" | "-np" ) 
-        unset SHOULD_COPY
+        dont_copy=1
+        log "${LINENO}" "dont_copy set to 1" 
     ;;
     "-h" | "-help" )
+        log "${LINENO}" "help-message case" 
         help_message
-        break
+        # EXITS AT HELP-MESSAGE METHOD
     ;;
     * )
+        log "${LINENO}" "$_arg" "send_to_touch"
         touch_output="$(send_to_touch "${_arg}")"
-        if [ "${touch_output}" != "0" ]; then
-            # EXITED WITH AN ERROR MESSAGE
-            echo "${touch_output}"
-            exit    
+        
+        if [ $? -ne 0 ]; then
+            # EXITED WITH ERROR MESSAGE
+            log "TOUCH FAILURE ] [ ${LINENO}" "$touch_output" 
+            echo "$touch_output"
+            exit 1
         fi
-        file_path="${_arg}"
+        file_path="$_arg"
         break 
     ;;
     esac
 done
 
-if [ -f "${file_path}" ]; then
-    # IF FILE EXISTS
-    [ -n "${SHOULD_COPY}" ] && echo "$_arg" | pbcopy
-    [ -n "${open_code}" ] && code --reuse-window "$file_path"
-    [ -n "${open_finder}" ] && open -R "$file_path"
+
+log "$LINENO" "$file_path" "argument that was used to create file"
+
+# SIMPLIFIED HOPEFULLY
+#########################################################################
+if [[ "$file_path" != /* || ! -f "$file_path" ]]; then
+    # PATH IS NOT AN ABSOLUTE PATH OR DOES NOT EXIST
+    # CHECK IF ARGUMENT WAS RELATIVE AND APPEND TO PATH
+    file_path="$current_path"/"$file_path"
 fi
+
+if [[ "$file_path" != /* && ! -f "$file_path" ]]; then
+    # I HAVE NO IDEA WHY THIS WOULD EVER RUN
+    log "FILE MADE NOT REAL ] [ ${LINENO}" "${file_path}" "UNKNOWN ERROR"
+    echo "FILE DOES NOT EXIST -- UNKNOWN ERROR"
+    exit 1
+fi
+
+if [ -z "${dont_copy}" ]; then
+    log "${LINENO}" "dont_copy not set" "copy to pasteboard"
+    echo "$file_path" | pbcopy
+fi
+if [ -n "${open_code}" ]; then 
+    log "${LINENO}" "open_code set" "open in vscode"
+    code --reuse-window "$file_path"
+
+elif [ -n "${open_finder}" ]; then
+    log "${LINENO}" "open_finder set" "open in finder"
+    open -R "$file_path"
+fi 
+log "SUCCESFULL RUN"
+exit 0
+
+
+# # THIS WORKS BUT I THINK I CAN SIMPLIFY IT A LOT IN THE UPPER BLOCK
+# #########################################################################
+# if [[ "$file_path" != /* || ! -f "$file_path" ]]; then
+#     # PATH IS NOT AN ABSOLUTE PATH OR DOES NOT EXIST
+#     # CHECK IF ARGUMENT WAS RELATIVE AND APPEND TO PATH
+#     file_path="$current_path"/"$file_path"
+#     if [[ "$file_path" == /* && -f "$file_path" ]]; then
+#         # FILE WAS RELATIVE AND APPENDED TO PATH
+#         log "${LINENO}" "$file_path" "Valid new path from working dir and argument"
+#     else
+#         # I HAVE NO IDEA WHY THIS WOULD EVER RUN
+#         log "FILE MADE NOT REAL ] [ ${LINENO}" "${file_path}" "UNKNOWN ERROR"
+#         echo "FILE DOES NOT EXIST"
+#         echo "UNKNOWN ERROR"
+#         exit 1
+#     fi
+# fi
+
+
+# if [[ "$file_path" != /* && ! -f "$file_path" ]]; then
+#     # I HAVE NO IDEA WHY THIS WOULD EVER RUN
+#     log "FILE MADE NOT REAL ] [ ${LINENO}" "${file_path}" "UNKNOWN ERROR"
+#     echo "FILE DOES NOT EXIST"
+#     echo "UNKNOWN ERROR"
+#     exit 1
+# fi    
+
+# if [ -z "${dont_copy}" ]; then
+#     log "${LINENO}" "dont_copy not set" "copy to pasteboard"
+#     echo "$file_path" | pbcopy
+# fi
+# if [ -n "${open_code}" ]; then 
+#     log "${LINENO}" "open_code set" "open in vscode"
+#     code --reuse-window "$file_path"
+
+# elif [ -n "${open_finder}" ]; then
+#     log "${LINENO}" "open_finder set" "open in finder"
+#     open -R "$file_path"
+# fi 
+# log "SUCCESFULL RUN"
+# exit 0
+# #########################################################################
+
+    
+

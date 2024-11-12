@@ -6,9 +6,8 @@ from subprocess import run
 
 
 def main(argument: list=[]):
-    textFilePath = path.join("/Users/diegoibarra/Developer/1_myProjects/MiniProjects/RandomText", "sample-text")
+    textFilePath = path.join(path.dirname(path.realpath(__file__)), "sample-text")
     
-
     textToCopy = ""
     with open(textFilePath, "r") as textOpen:
             textString = textOpen.read()
