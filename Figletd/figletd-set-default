@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+
+
+REALDIR=$(which figlet | xargs realpath)
+FONT_DIR=$(dirname $(dirname $(dirname ${REALDIR})))/fonts
+
+FONT_NAME=$1
+FONT_PATH="${FONT_DIR}/${FONT_NAME}.flf"
+DEFAULT_PATH="${FONT_DIR}/default.tlf"
+
+if [ -f $FONT_PATH ]; then
+    cp $FONT_PATH $DEFAULT_PATH 
+else
+    echo $FONT_PATH
+    echo "DOES NOT EXIST"
+    exit 1
+    
+fi
+
+echo $FONT_PATH
+
+

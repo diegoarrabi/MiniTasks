@@ -5,4 +5,24 @@
 #       
 ##############################################################
 
-figlet "$@" | pbcopy
+
+REALDIR=$(which figlet | xargs realpath)
+FONT_PATH=$(dirname $(dirname $(dirname ${REALDIR})))/fonts
+
+for arg in $@; do
+    if [[ $arg == -* ]]; then
+        case $arg in
+            -set-default-font)
+                echo "SET DEFAULT FONT"
+                ;;
+            *)
+                echo "DEFAULT OPTION"
+                ;;
+        esac
+    else
+        figlet -f rubifont "$@"
+        figlet -f rubifont "$@" | pbcopy
+    fi
+done
+
+

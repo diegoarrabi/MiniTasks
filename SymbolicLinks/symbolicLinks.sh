@@ -13,6 +13,7 @@ FILES_TO_SYMLINK=(
     "/Users/diegoibarra/Developer/1_myProjects/MiniTasks/Datetimed/datetimed"
     "/Users/diegoibarra/Developer/1_myProjects/MiniTasks/EchoEachPath/echoPath"
     "/Users/diegoibarra/Developer/1_myProjects/MiniTasks/Figletd/figletd"
+    "/Users/diegoibarra/Developer/1_myProjects/Apps/ToDo/todoConsole"
 )
 
 
@@ -61,26 +62,3 @@ if [ ${#ERROR_LIST} -ne 0 ]; then
     exit
 fi
 
-
-
-
-
-
-###################################################################################################
-
-# /Users/diegoibarra/Developer/1_myProjects/MiniProjects/NestControl/nest /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniProjects/OpenWorkDirectory/workdir /usr/local/bin
-
-
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/RandomText/randomText /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/FontScriptName/fontScriptName /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/CreateIconSet/createIconSet /usr/local/bin
-
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/TestDialog/testDialog /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/Preview256Colors/preview256colors /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/Touchd/touchd /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/Datetimed/datetimed /usr/local/bin
-
-
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/EchoEachPath/echoPath /usr/local/bin
-# /Users/diegoibarra/Developer/1_myProjects/MiniTasks/Figletd/figletd /usr/local/bin

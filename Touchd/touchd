@@ -94,7 +94,7 @@ fi
 for _arg in "$@"; do
     log "${LINENO}" "$_arg" "Argument iteration"
     case "${_arg:l}" in
-    "-code" | "-c" | "-vs" | "-vscode")
+    "-code" | "-c" | "-v" | "-vs" | "-vscode")
         open_code=1
         log "${LINENO}" "open_code set to 1" 
     ;;
