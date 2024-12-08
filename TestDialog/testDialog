@@ -22,7 +22,7 @@ on run (script_argv)
 	set popup_icon to POSIX file "/Users/diegoibarra/Pictures/2. Icons/0. Icons/sfpro/apple.terminal.png"
 	set button_text to ":)"
 	
-	display dialog popup_msg with title popup_title with icon popup_icon buttons {button_text} default button 1 giving up after 1
+	display dialog popup_msg with title popup_title with icon popup_icon buttons {button_text} default button 1 giving up after 3
 	
 	return script_argv
 	

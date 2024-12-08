@@ -1,0 +1,9 @@
+#!/usr/bin/osascript
+
+on run()
+    tell application "MarkEdit" to quit
+    delay 1
+    set my_file to POSIX file "/Users/diegoibarra/Desktop/Medicine.md"
+    tell application "MarkEdit" to open my_file
+end run
+
