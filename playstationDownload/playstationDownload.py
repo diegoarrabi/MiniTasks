@@ -214,6 +214,6 @@ def wgetCmd(new_file_name: str, url_link: str, user_agent: str) -> int:
 
 
 if __name__ == "__main__":
-    BASEDIR = "/Users/diegoibarra/Local/PlayStation/Games/PS3 Games Pkg"
+    BASEDIR = "/Users/diegoibarra/Local/PlayStation/Games/PS3"
     terminal_size = get_terminal_size()
     main()
