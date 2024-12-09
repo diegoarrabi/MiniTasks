@@ -26,7 +26,7 @@ def main():
     # OPEN CSV FILE
     csv_file = pd.read_csv(GAMELIST_CSV, header=None)
     games_list = getGameList(csv_file)
-
+    
     # ITERATE THROUGH EACH GAME
     for _game in games_list:
         _continue = True
@@ -153,12 +153,16 @@ def getGameList(_file: pd.DataFrame) -> tuple[int, str]:
     games_list = []
 
     for _row in range(len(_file.index)):
+        
+        # SKIPS HEADER FILE
+        if _row == 0:
+            continue
+
         _keys = ['GameName', 'RapName', 'RapLink', 'MainLink', 'Type']
         game_dict = defaultdict(str)
 
-        if _file.isnull().iloc[_row].any() or len(_file.columns) == 2:
+        if _file.isnull().iloc[_row].any():
             # CHECKS TO SEE IF ROW HAS LESS THAN 4 ENTRIES (IF OTHER ROWS HAVE FOUR ENTRIES)
-            # OR CHECKS TO SEE IF THERE ARE ONLY 2 COLUMNS
             # TWO COLUMNS IS THE ENTRY FOR AN ISO FILE
             game_dict[_keys[0]] = _file.loc[_row, 0].strip()  # GameName
             game_dict[_keys[3]] = _file.loc[_row, 1].strip()  # MainLink
@@ -188,19 +192,14 @@ def wgetCmd(new_file_name: str, url_link: str, user_agent: str) -> int:
     Return:
         shell command return code
     """
-    # process = run(['wget', '--max-redirect=1', '-O', new_file_name, '-U', user_agent, url_link], capture_output=True, text=True)
-    # wget_output = (process.stderr).strip()
-    # print(wget_output)
-    # exitcode = process.returncode
-    # return (exitcode, wget_output)
     stdout=""
     process = Popen(['wget', '--progress=bar:force:noscroll', '--max-redirect=1', '-O', new_file_name, '-U', user_agent, url_link], stderr=PIPE, text=True)
-    print('\x1b[?25l', end="")
+    # print('\x1b[?25l', end="")
     print('\x1b[1m', end="")
     print('\x1b[38;5;0m', end="")
     print('\x1b[48;5;249m', end="")
     for _line in process.stderr:
-        if "%" in _line:
+        if "%[" in _line:
             _chars = len(_line.strip())
             extra_space = terminal_size.columns - _chars
             _filler = " "*extra_space
@@ -210,7 +209,7 @@ def wgetCmd(new_file_name: str, url_link: str, user_agent: str) -> int:
             stdout+=_line
     exitcode = process.wait()
     print('\x1b[0m', end="")
-    print('\x1b[?25h', end="")
+    # print('\x1b[?25h', end="")
     return (exitcode, stdout)
 
 
