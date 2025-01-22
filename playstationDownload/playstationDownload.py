@@ -193,7 +193,7 @@ def wgetCmd(new_file_name: str, url_link: str, user_agent: str) -> int:
         shell command return code
     """
     stdout=""
-    process = Popen(['wget', '--progress=bar:force:noscroll', '--max-redirect=1', '-O', new_file_name, '-U', user_agent, url_link], stderr=PIPE, text=True)
+    process = Popen(['wget', '--timeout=2', '--retry-connrefused', '--tries=50', '--progress=bar:force:noscroll', '--max-redirect=1', '-O', new_file_name, '-U', user_agent, url_link], stderr=PIPE, text=True)
     # print('\x1b[?25l', end="")
     print('\x1b[1m', end="")
     print('\x1b[38;5;0m', end="")
@@ -217,3 +217,8 @@ if __name__ == "__main__":
     BASEDIR = "/Users/diegoibarra/Local/PlayStation/Games/PS3"
     terminal_size = get_terminal_size()
     main()
+
+
+# while true;do
+# wget -T 15 -c http://example.com && break
+# done
