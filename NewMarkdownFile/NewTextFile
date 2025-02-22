@@ -1,0 +1,38 @@
+#!/usr/bin/osascript
+
+tell application "Finder"
+	
+	set _count to 1
+	set fileBaseName to "Untitled File"
+	set currentPath to insertion location as text
+	
+	repeat
+		-- SET FILE NAME
+		if _count is equal to 1 then
+			set fileName to (fileBaseName & ".txt")
+		else
+			set fileName to (fileBaseName & " " & (_count as string) & ".txt")
+		end if
+		
+		--CHECK TO SEE IF FILE EXISTS
+		set filePath to (currentPath & fileName)
+		if not (exists filePath) then exit repeat
+		
+		--REPEAT WITH NEXT NUMBER
+		set _count to (_count + 1)
+		if _count is equal to 100 then
+			display dialog "Unable to Create Text File" buttons {"ok"} default button 1 giving up after 1.5
+			return
+		end if
+	end repeat
+	
+	--MAKE NEW FILE
+	try
+		set newFile to make new file at currentPath with properties {name:fileName, file type:"TEXT", creator type:"ttxt"}
+		set result to select newFile
+		delay 1
+		tell application "System Events" to keystroke return
+	on error errMsg
+		display dialog (errMsg)
+	end try
+end tell

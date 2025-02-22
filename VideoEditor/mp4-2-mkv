@@ -1,0 +1,4 @@
+#!/bin/zsh
+
+current_directory=$(PWD)
+# echo $current_directory
