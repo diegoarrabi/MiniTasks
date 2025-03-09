@@ -14,6 +14,7 @@ def createIconSet(iconType: list) -> None:
     scpt_out = scpt_out.stdout.strip()
     scpt_out = scpt_out.replace('Macintosh HD', '', 1)
     imagePath = scpt_out.replace(":", '/')
+    icnsPath = path.join(path.dirname(imagePath), "AppIcon.icns")
     
     iconSetDir = path.join(path.dirname(imagePath), iconType[0])
     
@@ -30,6 +31,7 @@ def createIconSet(iconType: list) -> None:
 
     sleep(1)
     run(['iconutil', '-c', 'icns', str(iconSetDir)])
+    run(['open', '-R', icnsPath])
 ####################################################################
 #################################################################### 
 #################################################################### 

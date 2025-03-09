@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+argument_count="${#@}"
+
+current_directory=$(PWD)
+
+if [ $argument_count -eq 0 ] || [[ ! $1 =~ ^[0-9]+$ ]] 
+then 
+   folder_count=5
+else
+   folder_count=$1
+fi
+
+for i in {1..$folder_count}
+do
+   mkdir "${i}FOLDER"
+done

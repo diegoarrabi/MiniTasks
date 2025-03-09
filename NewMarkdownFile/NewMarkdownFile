@@ -9,9 +9,9 @@ tell application "Finder"
 	repeat
 		-- SET FILE NAME
 		if _count is equal to 1 then
-			set fileName to (fileBaseName & ".txt")
+			set fileName to (fileBaseName & ".md")
 		else
-			set fileName to (fileBaseName & " " & (_count as string) & ".txt")
+			set fileName to (fileBaseName & " " & (_count as string) & ".md")
 		end if
 		
 		--CHECK TO SEE IF FILE EXISTS
@@ -21,14 +21,14 @@ tell application "Finder"
 		--REPEAT WITH NEXT NUMBER
 		set _count to (_count + 1)
 		if _count is equal to 100 then
-			display dialog "Unable to Create Text File" buttons {"ok"} default button 1 giving up after 1.5
+			display dialog "Unable to Create Markdown File" buttons {"ok"} default button 1 giving up after 1.5
 			return
 		end if
 	end repeat
 	
 	--MAKE NEW FILE
 	try
-		set newFile to make new file at currentPath with properties {name:fileName, file type:"TEXT", creator type:"ttxt"}
+		set newFile to make new file at currentPath with properties {name:fileName}
 		set result to select newFile
 		delay 1
 		tell application "System Events" to keystroke return
