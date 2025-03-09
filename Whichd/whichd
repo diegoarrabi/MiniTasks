@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+# figlet -f rubifont "$@"
+# figlet -f rubifont "$@" | pbcopy
+
+ARGUMENT_COUNT=${#@}
+
+if [[ $ARGUMENT_COUNT -gt 1 ]]; then
+    echo "\"which\" only takes one argument"
+fi
+
+which_output=$(which $1)
+error_message="$1 not found"
+
+# COMMAND NOT FOUND
+if [ $which_output = $error_message ]; then
+    echo $which_output
+    exit
+elif [ -L $which_output ]; then
+    echo Symbolic Link:
+    echo "$which_output\n"
+    echo Real Path:
+fi
+
+REALDIR=$(which $1 | xargs realpath)
+echo $REALDIR
+echo $REALDIR | pbcopy
+
+exit
+
+

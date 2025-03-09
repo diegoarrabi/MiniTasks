@@ -10,26 +10,21 @@ REALDIR=$(which figlet | xargs realpath)
 FONT_PATH=$(dirname $(dirname $(dirname ${REALDIR})))/fonts
 STRING=""
 
-echo $0 | xargs realpath
+for arg in $@; do
+    if [[ $arg == -* ]]; then
+        case $arg in
+            -set-default-font)
+                echo "SET DEFAULT FONT"
+                ;;
+            *)
+                echo "DEFAULT OPTION"
+                ;;
+        esac
+    else
+        STRING="${STRING}${arg} "
+    fi
+done
 
-# for arg in $@; do
-#     if [[ $arg == -* ]]; then
-#         case $arg in
-#             -set-default-font)
-#                 echo "SET DEFAULT FONT"
-#                 ;;
-#             *)
-#                 echo "DEFAULT OPTION"
-#                 ;;
-#         esac
-#     else
-#         echo "$arg"
-#         STRING="${STRING}${arg}"
-#     fi
-# done
-
-echo "$STRING"
-
-# figlet -f rubifont "$@"
-# figlet -f rubifont "$@" | pbcopy
+figlet -f rubifont "$@"
+figlet -f rubifont "$@" | pbcopy
 
