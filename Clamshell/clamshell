@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+CLAMSHELL_ISON=" hibernatemode        0"
+CLAMSHELL_ISOFF=" hibernatemode        3"
+
+CLAMSHELL_STATUS="$(pmset -g | grep hibernatemode)"
+
+if [ "$CLAMSHELL_STATUS" = "$CLAMSHELL_ISON" ] 
+then
+    sudo pmset -a sleep 1
+    sudo pmset -a hibernatemode 3
+    sudo pmset -a disablesleep 0
+    osascript -e 'tell application "System Events" to restart'
+
+elif [ "$CLAMSHELL_STATUS" = "$CLAMSHELL_ISOFF" ]
+then 
+    sudo pmset -a sleep 0 
+    sudo pmset -a hibernatemode 0 
+    sudo pmset -a disablesleep 1
+    osascript -e 'tell application "System Events" to restart'
+fi
+
+
+

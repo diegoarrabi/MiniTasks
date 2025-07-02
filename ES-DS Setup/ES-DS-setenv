@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+launchctl setenv ESDE_APPDATA_DIR /Users/diegoibarra/.config/ES-DE

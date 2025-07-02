@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+APP_NAME="@1"
+
+APP_EXISTS=$(ls /Applications | grep -iw $APP_NAME)
+
+echo $APP_EXISTS

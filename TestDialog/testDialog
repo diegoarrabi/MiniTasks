@@ -19,10 +19,11 @@ on run (script_argv)
 	end if
 	
 	set popup_title to "Executable Test"
-	set popup_icon to POSIX file "/Users/diegoibarra/Pictures/1. Icons/0. Icons/sfpro/apple.terminal.png"
+	--set popup_icon to POSIX file "/Users/diegoibarra/Pictures/1. Icons/0. Icons/sfpro/apple.terminal.png"
 	set button_text to ":)"
 	
-	display dialog popup_msg with title popup_title with icon popup_icon buttons {button_text} default button 1 giving up after 3
+	--display dialog popup_msg with title popup_title with icon popup_icon buttons {button_text} default button 1 giving up after 3
+	display dialog popup_msg with title popup_title buttons {button_text} default button 1 giving up after 3
 	
 	return script_argv
 	

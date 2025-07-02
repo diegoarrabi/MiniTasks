@@ -10,8 +10,8 @@ def downloadImage(url, save_as):
     with open(save_path, 'wb') as file:
         file.write(response.content)
 
-IMG_DIR="/Users/diegoibarra/Documents/School/OSU/Education/Part 2/1. Rings/UPSMN/UPSMN Review/Internal Med/MyStudies"
-# IMG_DIR="/Users/diegoibarra/Downloads"
+# IMG_DIR="/Users/diegoibarra/Documents/School/OSU/Education/Part 2/1. Rings/UPSMN/UPSMN Review/Internal Med/MyStudies"
+IMG_DIR="/Users/diegoibarra/Downloads"
 
 var = sys.argv[1:]
 file_ext = var[1].split('.')

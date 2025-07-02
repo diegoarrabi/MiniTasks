@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+THERAPY_DIR="/Users/diegoibarra/Desktop/ /Therapy"
+TODAY_DATE=$(date "+%m-%d")
+FILE_EXT=".md"
+
+NEW_FILE=$THERAPY_DIR/$TODAY_DATE$FILE_EXT
+
+
+
+if [[ $1 == "open" ]]; then
+    open -R $THERAPY_DIR
+else
+    touch $NEW_FILE
+    open $NEW_FILE
+fi
