@@ -70,6 +70,7 @@ def helpMessage() -> None:
 def parseArguments(_arguments=[]) -> list[str, int, str, list[int, str]]:
     appSizeList = [
         [1024, "icon_512x512@2x.png"],
+        [512, "icon_512x512.png"],
         [512, "icon_256x256@2x.png"],
         [256, "icon_256x256.png"],
         [256, "icon_128x128@2x.png"],
@@ -92,7 +93,8 @@ def parseArguments(_arguments=[]) -> list[str, int, str, list[int, str]]:
     ]    
     if not _arguments:
         # APPICON
-        return ["AppIcon.iconset", 512, "icon_512x512.png", appSizeList]
+        return ["SidebarIcon.iconset", 128, "sidebar_32x32.png", sidebarSizeList]
+        # return ["AppIcon.iconset", 512, "icon_512x512.png", appSizeList]
     elif _arguments[0] in ('-sidebar', 'sidebar'):
         # SIDEBAR
         return ["SidebarIcon.iconset", 128, "sidebar_32x32.png", sidebarSizeList]

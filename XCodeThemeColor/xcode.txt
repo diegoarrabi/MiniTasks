@@ -1,0 +1,74 @@
+<key>BACKGROUND</key>
+<string>0.0941176 0.0941176 0.109804 1</string>
+<key>CURRENTLINE</key>
+<string>0.138526 0.146864 0.169283 1</string>
+<key>CURSOR</key>
+<string>0.917647 0.87451 0.0235294 1</string>
+<key>INVISIBLES</key>
+<string>0.258298 0.300954 0.355207 1</string>
+<key>TEXTSELECTION</key>
+<string>0.317647 0.356863 0.439216 1</string>
+<key>ATTRIBUTE</key>
+<string>0.750686 0.521157 0.334756 1</string>
+<key>CHARACTER</key>
+<string>0.814983 0.749393 0.412334 1</string>
+<key>COMMENT</key>
+<string>0.449401 0.654752 0.304596 1</string>
+<key>COMMENT-DOC</key>
+<string>0.449401 0.654752 0.304596 1</string>
+<key>COMMENT-DOC-KEYWORD</key>
+<string>0.635294 0.894118 0.454902 1</string>
+<key>DECLARATION-OTHER</key>
+<string>0.253946 0.630134 0.754779 1</string>
+<key>DECLARATION-TYPE</key>
+<string>0.362946 0.846428 0.998966 1</string>
+<key>IDENTIFIER-CLASS</key>
+<string>0.621449 0.943864 0.868194 1</string>
+<key>IDENTIFIER-CLASS-SYSTEM</key>
+<string>0.816806 0.656917 0.999271 1</string>
+<key>IDENTIFIER-CONSTANT</key>
+<string>0.405383 0.717051 0.642088 1</string>
+<key>IDENTIFIER-CONSTANT-SYSTEM</key>
+<string>0.632318 0.402193 0.901151 1</string>
+<key>IDENTIFIER-FUNCTION</key>
+<string>0.405383 0.717051 0.642088 1</string>
+<key>IDENTIFIER-FUNCTION-SYSTEM</key>
+<string>0.632318 0.402193 0.901151 1</string>
+<key>IDENTIFIER-MACRO</key>
+<string>0.991311 0.560764 0.246107 1</string>
+<key>IDENTIFIER-MACRO-SYSTEM</key>
+<string>0.991311 0.560764 0.246107 1</string>
+<key>IDENTIFIER-TYPE</key>
+<string>0.621449 0.943864 0.868194 1</string>
+<key>IDENTIFIER-TYPE-SYSTEM</key>
+<string>0.816806 0.656917 0.999271 1</string>
+<key>IDENTIFIER-VARIABLE</key>
+<string>0.405383 0.717051 0.642088 1</string>
+<key>IDENTIFIER-VARIABLE-SYSTEM</key>
+<string>0.632318 0.402193 0.901151 1</string>
+<key>KEYWORD</key>
+<string>0.988394 0.37355 0.638329 1</string>
+<key>MARK</key>
+<string>0.572549 0.631373 0.694118 1</string>
+<key>MARKUP-CODE</key>
+<string>0.665 0.052 0.569 1</string>
+<key>NUMBER</key>
+<string>0.814983 0.749393 0.412334 1</string>
+<key>PLAIN</key>
+<string>1 1 1 0.85</string>
+<key>PREPROCESSOR</key>
+<string>0.991311 0.560764 0.246107 1</string>
+<key>REGEX</key>
+<string>0.989117 0.41558 0.365684 1</string>
+<key>REGEX-CAPTURENAME</key>
+<string>0.405383 0.717051 0.642088 1</string>
+<key>REGEX-CHARNAME</key>
+<string>0.632318 0.402193 0.901151 1</string>
+<key>REGEX-NUMBER</key>
+<string>0.814983 0.749393 0.412334 1</string>
+<key>REGEX-OTHER</key>
+<string>1 1 1 0.85</string>
+<key>STRING</key>
+<string>0.989117 0.41558 0.365684 1</string>
+<key>URL</key>
+<string>0.330191 0.511266 0.998589 1</string>

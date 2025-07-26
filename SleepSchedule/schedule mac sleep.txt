@@ -1,0 +1,1 @@
+pmset schedule sleep "06/26/25 01:00:00"
